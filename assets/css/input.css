@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'TrajanPro';
+  src: url('../../fonts/trajanpro_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@source "../../**/*.php";
+@source "../../assets/js/**/*.js";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Brand tokens — schimbă aceste valori pentru fiecare primărie nouă
+   ═══════════════════════════════════════════════════════════════════════════ */
+@theme {
+  --font-sans: 'Trebuchet MS', sans-serif;
+
+  --color-primary:  #004990;   /* albastru principal */
+  --color-accent:   #0079C1;   /* albastru deschis / hover */
+  --color-muted:    #58595B;   /* text secundar / gri mediu */
+  --color-faint:    #D1D3D4;   /* fundal subtil / gri deschis */
+  --color-stroke:   #e2e8f0;   /* borduri */
+  --color-ink:      #222222;   /* text principal */
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Utilities globale
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  /* Container refolosibil */
+  .site-container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Header scrolled shadow */
+  .header--scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+  }
+
+  /* Mobile nav — dropdown deschis */
+  @media (max-width: 767px) {
+    .nav-open {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--color-stroke);
+      padding: 0.75rem 1.5rem 1.5rem;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, .12);
+      z-index: 190;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Componente WordPress (meniu generat de wp_nav_menu — HTML fix)
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ─── Logo personalizat ─────────────────────────────────────────────────── */
+  .site-logo img {
+    max-height: 60px;
+    width: auto;
+  }
+
+  .logo-title {
+    font-size: 1rem;
+    font-family: 'TrajanPro';
+    padding-left: 10px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  
+
+  /* ─── Meniu principal (header) ──────────────────────────────────────────── */
+  .site-menu li { position: relative; }
+
+  .site-menu > li > a {
+    @apply flex items-center px-[10px] py-[30px] text-base font-semibold text-ink
+           whitespace-nowrap no-underline
+           transition-colors duration-[220ms]
+           hover:text-primary hover:bg-primary/[.06];
+  }
+  .site-menu > li.current-menu-item > a,
+  .site-menu > li.current-menu-ancestor > a {
+    @apply text-primary bg-primary/[.06];
+  }
+
+  /* Dropdown */
+  /* Nivel 1 — apare sub item-ul părinte */
+  .site-menu > li > .sub-menu {
+    @apply hidden absolute top-full left-0 min-w-[220px]
+           bg-white border border-stroke py-[.4rem] z-[300]
+           list-none m-0 shadow-[0_8px_40px_rgba(0,0,0,.12)];
+  }
+  /* Nivel 2+ — apare la dreapta item-ului părinte */
+  .site-menu .sub-menu .sub-menu {
+    @apply hidden absolute top-0 left-full min-w-[220px]
+           bg-white border border-stroke py-[.4rem] z-[300]
+           list-none m-0 shadow-[0_8px_40px_rgba(0,0,0,.12)];
+  }
+  .site-menu li:hover > .sub-menu,
+  .site-menu li:focus-within > .sub-menu { @apply block; }
+
+  .site-menu .sub-menu a {
+    @apply block px-[1.1rem] py-[.55rem] text-base text-ink no-underline
+           transition-colors duration-[220ms]
+           hover:bg-faint hover:text-primary;
+  }
+
+  /* Mobile nav menu */
+  @media (max-width: 767px) {
+    .site-menu { flex-direction: column !important; justify-content: flex-start !important; }
+    .site-menu > li > a { @apply py-[.65rem]; }
+    .site-menu .sub-menu {
+      position: static !important;
+      box-shadow: none !important;
+      border: none !important;
+      padding-left: 1rem;
+    }
+  }
+
+  /* ─── Meniu footer ──────────────────────────────────────────────────────── */
+  .footer-nav a {
+    @apply block text-base text-white/65 no-underline
+           transition-all duration-[220ms]
+           hover:text-accent hover:pl-1;
+  }
+
+  /* ─── Tabel documente ───────────────────────────────────────────────────── */
+  .doc-row-white { background: #ffffff; }
+  .doc-row-gray  { background: #f4f5f6; }
+
+  .doc-row {
+    @apply border-b border-stroke/60 hover:bg-primary/[.04] transition-colors duration-[180ms];
+  }
+
+  .doc-cell {
+    @apply px-5 py-[.6rem];
+  }
+
+  .doc-cell-right {
+    @apply px-5 py-[.6rem] text-right align-middle;
+  }
+
+  .doc-download-link {
+    @apply inline-flex items-center gap-[.3rem] text-base text-ink no-underline
+           hover:text-primary transition-colors font-medium;
+  }
+}

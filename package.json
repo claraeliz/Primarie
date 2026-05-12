@@ -1,0 +1,13 @@
+{
+  "name": "primarie-theme",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev":   "tailwindcss -i ./assets/css/input.css -o ./assets/css/theme.css --watch",
+    "build": "tailwindcss -i ./assets/css/input.css -o ./assets/css/theme.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}
