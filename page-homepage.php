@@ -421,8 +421,8 @@ $echipa            = get_field( 'echipa_administrativa' ) ?: [
                                             <?php if ( $fisier ) : ?>
                                                 <a href="<?php echo esc_url( $fisier['url'] ); ?>"
                                                    target="_blank" rel="noopener noreferrer"
-                                                   class="doc-download-link">
-                                                    <svg class="size-7 shrink-0 text-red-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                   class="doc-download-link group">
+                                                    <svg class="size-7 shrink-0 text-ink transition-colors duration-200 group-hover:text-primary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                                         <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm5.845 17.03a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V12a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3z" clip-rule="evenodd"/>
                                                         <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"/>
                                                     </svg>
@@ -494,66 +494,6 @@ $echipa            = get_field( 'echipa_administrativa' ) ?: [
 </section>
 
 <!-- ═══════════════════════════════ INFO STRIP ══════════════════════════════ -->
-<section class="bg-primary py-12 text-white" aria-label="Informații contact">
-    <div class="site-container">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-            <div class="flex items-start gap-4">
-                <div class="size-11 text-accent shrink-0 [&_svg]:size-full" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-accent text-base font-bold uppercase tracking-[.1em] m-0 mb-1">
-                        <?php esc_html_e( 'Adresă', 'primarie' ); ?>
-                    </h3>
-                    <p class="text-white/80 text-base m-0 leading-[1.6]">
-                        <?php esc_html_e( 'Strada Principală, nr. 1', 'primarie' ); ?><br>
-                        <?php esc_html_e( 'Cod poștal: 000000', 'primarie' ); ?>
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-                <div class="size-11 text-accent shrink-0 [&_svg]:size-full" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-accent text-base font-bold uppercase tracking-[.1em] m-0 mb-1">
-                        <?php esc_html_e( 'Telefon', 'primarie' ); ?>
-                    </h3>
-                    <p class="text-white/80 text-base m-0 leading-[1.6]">
-                        <a href="tel:+40258000000" class="text-white/80 no-underline hover:text-accent transition-colors">+40 258 000 000</a><br>
-                        <a href="tel:+40258000001" class="text-white/80 no-underline hover:text-accent transition-colors">+40 258 000 001</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-                <div class="size-11 text-accent shrink-0 [&_svg]:size-full" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-accent text-base font-bold uppercase tracking-[.1em] m-0 mb-1">
-                        <?php esc_html_e( 'Email', 'primarie' ); ?>
-                    </h3>
-                    <p class="text-white/80 text-base m-0">
-                        <a href="mailto:<?php echo esc_attr( get_option( 'admin_email' ) ); ?>"
-                           class="text-white/80 no-underline hover:text-accent transition-colors">
-                            <?php echo esc_html( get_option( 'admin_email' ) ); ?>
-                        </a>
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
 
 <?php get_footer(); ?>
