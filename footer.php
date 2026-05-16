@@ -7,7 +7,7 @@
             <!-- Logo -->
             <div class="flex items-center gap-3">
                 <?php if ( has_custom_logo() ) : ?>
-                    <div class="[&_img]:!max-h-[60px] [&_img]:!h-auto [&_img]:!w-auto [&_img]:block">
+                    <div class="footer-logo">
                         <?php the_custom_logo(); ?>
                     </div>
                 <?php else : ?>
