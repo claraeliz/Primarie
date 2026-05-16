@@ -7,9 +7,10 @@
             <!-- Logo -->
             <div class="flex items-center gap-3">
                 <?php if ( has_custom_logo() ) : ?>
-                    <div class="footer-logo">
-                        <?php the_custom_logo(); ?>
-                    </div>
+                    <a class="flex items-center shrink-0 site-logo footer-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+                        <?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, [ 'class' => 'custom-logo' ] ); ?>
+                        <span class="logo-title">Comuna<br>Nimigea<br>Județul Bistrița-Năsăud</span>
+                    </a>
                 <?php else : ?>
                     <svg class="size-10 text-ink/40 shrink-0" viewBox="0 0 60 60" fill="none" aria-hidden="true">
                         <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="2" opacity=".5"/>
