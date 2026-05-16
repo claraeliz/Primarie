@@ -1,5 +1,26 @@
 <footer class="bg-white text-gray-600">
 
+    <!-- Banner slider -->
+    <div class="banner-slider border-b border-gray-200" id="bannerSlider" aria-label="Bannere parteneri">
+        <button class="banner-slider__btn banner-slider__prev" aria-label="<?php esc_attr_e( 'Anterior', 'primarie' ); ?>">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="banner-slider__viewport">
+            <div class="banner-slider__track">
+                <?php for ( $i = 1; $i <= 10; $i++ ) : ?>
+                <div class="banner-slider__slide">
+                    <div class="banner-slider__placeholder"><?php echo esc_html( "Banner $i" ); ?></div>
+                </div>
+                <?php endfor; ?>
+            </div>
+        </div>
+
+        <button class="banner-slider__btn banner-slider__next" aria-label="<?php esc_attr_e( 'Următor', 'primarie' ); ?>">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+    </div>
+
     <!-- Main footer -->
     <div class="py-10 border-t border-gray-200">
         <div class="site-container flex flex-col items-center gap-6">
