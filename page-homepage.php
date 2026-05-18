@@ -78,38 +78,55 @@ get_header();
 ?>
 
 <!-- ═══════════════════════════════ HERO ════════════════════════════════════ -->
-<section class="relative bg-cover bg-center pt-[140px] pb-[110px] overflow-hidden bg-gradient-to-br from-primary to-accent"<?php echo $hero_style; // phpcs:ignore ?> aria-label="Banner principal">
-    <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(7,9,10,.45)_0%,rgba(0,73,144,.4)_100%)]"></div>
-    <div class="site-container relative z-10">
-        <div class="max-w-[620px]">
-            <p class="text-base font-semibold uppercase tracking-[.12em] text-white/70 m-0 mb-3">
-                <?php esc_html_e( 'Portal oficial al', 'primarie' ); ?>
-            </p>
-            <h1 class="text-[2.6rem] md:text-[3.5rem] font-extrabold text-white leading-[1.1] m-0 mb-4 tracking-[-0.02em]">
-                <?php
-                $hero_title = get_field( 'hero_title' );
-                if ( ! empty( $hero_title ) ) {
-                    echo esc_html( $hero_title );
-                }
-                ?>
-            </h1>
-            <p class="text-[1.05rem] text-white/75 m-0 mb-8">
-                <?php esc_html_e( 'Portal online – rapid, simplu, eficient', 'primarie' ); ?>
-            </p>
-            <div class="flex flex-wrap gap-3">
-                <a href="#servicii"
-                   class="inline-flex items-center px-6 py-3 bg-white text-primary text-base font-bold no-underline
-                          transition-all duration-[220ms] hover:bg-accent hover:text-white hover:-translate-y-[2px] hover:shadow-[0_6px_24px_rgba(0,0,0,.25)]">
-                    <?php esc_html_e( 'Servicii cetățeni', 'primarie' ); ?>
-                </a>
-                <a href="#noutati"
-                   class="inline-flex items-center px-6 py-3 bg-transparent text-white text-base font-bold no-underline
-                          border border-white/40 transition-all duration-[220ms] hover:bg-white/10 hover:border-white/70">
-                    <?php esc_html_e( 'Noutăți', 'primarie' ); ?>
-                </a>
+<?php
+// Îmbinăm min-height + position cu eventualul background-image
+$section_style = 'position:relative;overflow:hidden;min-height:580px;';
+if ( $hero_img ) {
+    $section_style .= 'background-image:url(' . esc_url( $hero_img['url'] ) . ');background-size:cover;background-position:center;';
+}
+?>
+<section class="bg-gradient-to-br from-primary to-accent" style="<?php echo esc_attr( $section_style ); ?>" aria-label="Banner principal">
+
+    <!-- Harta: fundal absolut, umple tot hero-ul -->
+    <div id="harta-comuna" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;"></div>
+
+    <!-- Overlay subtil: gradient alb pe stânga pentru lizibilitate text -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none;background:linear-gradient(to right,rgba(255,255,255,.82) 0%,rgba(255,255,255,.55) 38%,rgba(255,255,255,.10) 60%,transparent 75%);"></div>
+
+    <!-- Conținut hero: deasupra hărții și overlay -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;display:flex;align-items:center;pointer-events:none;">
+        <div class="site-container w-full py-16">
+            <div class="max-w-[620px]" style="pointer-events:auto;">
+                <p class="text-base font-semibold uppercase tracking-[.12em] text-black m-0 mb-3">
+                    <?php esc_html_e( 'Județul Bistrița-Năsăud', 'primarie' ); ?>
+                </p>
+                <h1 class="text-[2.6rem] md:text-[3.5rem] font-extrabold text-black leading-[1.1] m-0 mb-4 tracking-[-0.02em]">
+                    <?php
+                    $hero_title = get_field( 'hero_title' );
+                    if ( ! empty( $hero_title ) ) {
+                        echo esc_html( $hero_title );
+                    }
+                    ?>
+                </h1>
+                <p class="text-[1.05rem] text-black m-0 mb-8">
+                    <?php esc_html_e( 'Portal online – rapid, simplu, eficient', 'primarie' ); ?>
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="#servicii"
+                       class="inline-flex items-center px-6 py-3 bg-primary text-white text-base font-bold no-underline
+                              transition-all duration-[220ms] hover:bg-accent hover:text-white hover:-translate-y-[2px] hover:shadow-[0_6px_24px_rgba(0,0,0,.25)]">
+                        <?php esc_html_e( 'Servicii cetățeni', 'primarie' ); ?>
+                    </a>
+                    <a href="#noutati"
+                       class="inline-flex items-center px-6 py-3 bg-transparent text-black text-base font-bold no-underline
+                              border border-black/40 transition-all duration-[220ms] hover:bg-black/10 hover:border-black/70">
+                        <?php esc_html_e( 'Noutăți', 'primarie' ); ?>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
 </section>
 
 
@@ -179,11 +196,11 @@ $despre_link      = get_field( 'despre_link' )      ?: '';
                     <?php endif; ?>
                     <!-- gradient + text absolut peste imagine -->
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent pt-16 pb-5 px-5 text-left">
-                        <h2 id="despre-heading" class="text-[1.55rem] font-extrabold text-white m-0 mb-[3px] tracking-[-0.01em]">
+                        <h2 id="despre-heading" class="text-[1.55rem] font-extrabold text-black m-0 mb-[3px] tracking-[-0.01em]">
                             <?php echo esc_html( $despre_titlu ); ?>
                         </h2>
                         <?php $subtitlu_display = $despre_subtitlu ?: __( 'Comună în județul Bistrița-Năsăud', 'primarie' ); ?>
-                        <p class="text-[.7rem] font-bold uppercase tracking-[.18em] text-white/65 m-0">
+                        <p class="text-[.7rem] font-bold uppercase tracking-[.18em] text-black/65 m-0">
                             <?php echo esc_html( $subtitlu_display ); ?>
                         </p>
                     </div>
@@ -342,7 +359,7 @@ $echipa            = get_field( 'echipa_administrativa' ) ?: [
                     <p class="text-[1.2rem] font-extrabold text-white m-0 mb-[2px] tracking-[-0.01em]">
                         <?php echo esc_html( $primar_nume ); ?>
                     </p>
-                    <p class="text-[.68rem] font-bold uppercase tracking-[.16em] text-white/65 m-0">
+                    <p class="text-[.68rem] font-bold uppercase text-white tracking-[.16em] text-white/65 m-0">
                         <?php echo esc_html( sprintf( __( 'Primarul comunei %s', 'primarie' ), $primar_titlu ) ); ?>
                     </p>
                 </div>
@@ -402,13 +419,12 @@ $echipa            = get_field( 'echipa_administrativa' ) ?: [
                                                         $ts = get_the_time( 'U' );
                                                     }
                                                 ?>
-                                                <div class="flex flex-row items-center justify-center text-black w-[198px] min-h-[64px] shrink-0 text-center py-2 ">
-                                                    <i class="bx bxs-calendar-alt text-[1.4rem] leading-none mb-[3px] opacity-80"></i>
-                                                   
-                                                    <div class="flex flex-row items-center justify-center gap-[4px] flex-wrap"> 
+                                                <div class="flex flex-row items-start justify-start text-white w-[198px] min-h-[64px] shrink-0 text-center py-2 ">
+                                                                                                      
+                                                    <div class="flex flex-row items-center justify-center gap-[4px] flex-wrap bg-primary text-white rounded-[10px] px-[5px] py-[10px]">
                                                         <span class="text-[1rem] leading-none"><?php echo date_i18n( 'd', $ts ); ?></span>
                                                         <span class="text-[1rem] leading-none tracking-wide"><?php echo date_i18n( 'M', $ts ); ?></span>
-                                                        <span class="text-[1rem] leading-none relative top-[0px]"><?php echo date_i18n( 'Y', $ts ); ?></span>
+                                                        <span class="text-[1rem] leading-none w-full relative top-[0px]"><?php echo date_i18n( 'Y', $ts ); ?></span>
                                                     </div>
                                                     
                                                 </div>
@@ -470,20 +486,20 @@ $echipa            = get_field( 'echipa_administrativa' ) ?: [
                 </ul>
 
                 <!-- Schedule card -->
-                <div class="bg-primary p-6 text-white">
-                    <h3 class="text-[1rem] font-bold m-0 mb-4"><?php esc_html_e( 'Program de lucru', 'primarie' ); ?></h3>
-                    <ul class="flex flex-col list-none m-0 p-0">
-                        <li class="flex justify-between items-center text-base py-[.45rem] border-b border-white/[.12]">
-                            <span class="text-white/75"><?php esc_html_e( 'Luni – Joi', 'primarie' ); ?></span>
-                            <strong class="font-bold">08:00 – 16:30</strong>
+                <div class="schedule-card">
+                    <h3><?php esc_html_e( 'Program de lucru', 'primarie' ); ?></h3>
+                    <ul>
+                        <li>
+                            <span><?php esc_html_e( 'Luni – Joi', 'primarie' ); ?></span>
+                            <strong>08:00 – 16:30</strong>
                         </li>
-                        <li class="flex justify-between items-center text-base py-[.45rem] border-b border-white/[.12]">
-                            <span class="text-white/75"><?php esc_html_e( 'Vineri', 'primarie' ); ?></span>
-                            <strong class="font-bold">08:00 – 14:00</strong>
+                        <li>
+                            <span><?php esc_html_e( 'Vineri', 'primarie' ); ?></span>
+                            <strong>08:00 – 14:00</strong>
                         </li>
-                        <li class="flex justify-between items-center text-base pt-[.45rem]">
-                            <span class="text-white/75"><?php esc_html_e( 'Sâmbătă – Duminică', 'primarie' ); ?></span>
-                            <strong class="font-bold"><?php esc_html_e( 'Închis', 'primarie' ); ?></strong>
+                        <li>
+                            <span><?php esc_html_e( 'Sâmbătă – Duminică', 'primarie' ); ?></span>
+                            <strong><?php esc_html_e( 'Închis', 'primarie' ); ?></strong>
                         </li>
                     </ul>
                 </div>

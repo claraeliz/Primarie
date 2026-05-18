@@ -57,6 +57,22 @@ add_action( 'wp_enqueue_scripts', function () {
     );
 } );
 
+// ─── ACF Local JSON ──────────────────────────────────────────────────────────
+
+add_filter( 'acf/settings/save_json', function () {
+    return get_template_directory() . '/acf-json';
+} );
+
+add_filter( 'acf/settings/load_json', function ( $paths ) {
+    $paths[] = get_template_directory() . '/acf-json';
+    return $paths;
+} );
+
+// ─── Theme Settings ──────────────────────────────────────────────────────────
+
+$_inc = get_template_directory() . '/inc/footer-settings.php';
+if ( file_exists( $_inc ) ) require_once $_inc;
+
 // ─── Disable Gutenberg ───────────────────────────────────────────────────────
 
 add_filter( 'use_block_editor_for_post', '__return_false', 10 );
@@ -75,3 +91,52 @@ add_action( 'widgets_init', function () {
         'after_title'   => '</h2>',
     ] );
 } );
+
+
+/**
+ * Enqueue Leaflet + custom map script DOAR pe template-ul Hartă Comună
+ */
+add_action( 'wp_enqueue_scripts', 'claraeliz_enqueue_harta_comuna_assets' );
+function claraeliz_enqueue_harta_comuna_assets() {
+
+    if ( ! is_page_template( 'page-homepage.php' ) ) {
+        return;
+    }
+
+    // Leaflet CSS
+    wp_enqueue_style(
+        'leaflet-css',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+        array(),
+        '1.9.4'
+    );
+
+    // Leaflet JS
+    wp_enqueue_script(
+        'leaflet-js',
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+        array(),
+        '1.9.4',
+        true
+    );
+
+    // Script-ul propriu
+    wp_enqueue_script(
+        'harta-comuna-js',
+        get_stylesheet_directory_uri() . '/assets/js/harta-comuna.js',
+        array( 'leaflet-js' ),
+        '1.0.0',
+        true
+    );
+
+    // Date din PHP în JS (sigur, fără hardcoding în JS)
+    wp_localize_script( 'harta-comuna-js', 'hartaComunaData', array(
+        'geojsonUrl'    => get_stylesheet_directory_uri() . '/assets/geojson/nimigea.json',
+        'centerLat'     => 47.2333,
+        'centerLng'     => 24.3667,
+        'zoom'          => 8,
+        'primarieLat'   => 47.2350,
+        'primarieLng'   => 24.3680,
+        'primarieLabel' => __( 'Primăria Nimigea', 'claraeliz' ),
+    ) );
+}

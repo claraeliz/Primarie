@@ -13,36 +13,53 @@
         } );
     }
 
-    // Banner slider
+    // Banner slider — infinite loop via clone technique
     const sliderEl = document.getElementById( 'bannerSlider' );
 
     if ( sliderEl ) {
         const track    = sliderEl.querySelector( '.banner-slider__track' );
         const viewport = sliderEl.querySelector( '.banner-slider__viewport' );
-        const slides   = Array.from( track.children );
-        const GAP      = 16; // 1rem gap
+        const GAP      = 16;
         const INTERVAL = 5000;
 
-        let current  = 0;
-        let timer    = null;
+        // Clone all original slides and append for seamless forward loop.
+        // Also prepend clones for seamless backward loop, then start at N.
+        const origSlides = Array.from( track.children );
+        const N          = origSlides.length;
 
-        function visibleCount() {
-            const slideW = slides[ 0 ].offsetWidth + GAP;
-            return Math.max( 1, Math.floor( viewport.offsetWidth / slideW ) );
+        origSlides.forEach( s => track.appendChild( s.cloneNode( true ) ) );  // append clones
+        origSlides.forEach( s => track.insertBefore( s.cloneNode( true ), track.firstChild ) ); // prepend clones
+
+        // Start at the first real slide (offset N to skip prepended clones).
+        let current = N;
+        let locked  = false;
+        let timer   = null;
+
+        function sw() { return track.children[ 0 ].offsetWidth + GAP; }
+
+        function jumpTo( i ) {
+            track.style.transition = 'none';
+            current = i;
+            track.style.transform  = 'translateX(-' + ( i * sw() ) + 'px)';
+            track.offsetHeight; // force reflow so transition: none takes effect
+            track.style.transition = '';
         }
 
-        function maxIndex() {
-            return Math.max( 0, slides.length - visibleCount() );
+        function slideTo( i ) {
+            if ( locked ) return;
+            locked  = true;
+            current = i;
+            track.style.transform = 'translateX(-' + ( i * sw() ) + 'px)';
         }
 
-        function go( index ) {
-            current = Math.max( 0, Math.min( index, maxIndex() ) );
-            const slideW = slides[ 0 ].offsetWidth + GAP;
-            track.style.transform = 'translateX(-' + ( current * slideW ) + 'px)';
-        }
+        track.addEventListener( 'transitionend', function () {
+            if ( current >= N * 2 ) jumpTo( current - N ); // went past appended clones → jump to real
+            else if ( current < N ) jumpTo( current + N ); // went before prepended clones → jump to real
+            locked = false;
+        } );
 
-        function next() { go( current >= maxIndex() ? 0 : current + 1 ); }
-        function prev() { go( current <= 0 ? maxIndex() : current - 1 ); }
+        function next() { slideTo( current + 1 ); }
+        function prev() { slideTo( current - 1 ); }
 
         function startAutoplay() { timer = setInterval( next, INTERVAL ); }
         function stopAutoplay()  { clearInterval( timer ); }
@@ -53,6 +70,7 @@
         sliderEl.addEventListener( 'mouseenter', stopAutoplay );
         sliderEl.addEventListener( 'mouseleave', startAutoplay );
 
+        jumpTo( N ); // poziție inițială fără animație
         startAutoplay();
     }
 

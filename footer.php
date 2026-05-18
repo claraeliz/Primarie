@@ -8,11 +8,43 @@
 
         <div class="banner-slider__viewport">
             <div class="banner-slider__track">
-                <?php for ( $i = 1; $i <= 10; $i++ ) : ?>
+                <?php
+                $banners = get_option( 'primarie_footer_carousel', [] );
+                if ( ! is_array( $banners ) ) $banners = [];
+
+                if ( empty( $banners ) ) :
+                    for ( $n = 1; $n <= 10; $n++ ) :
+                ?>
                 <div class="banner-slider__slide">
-                    <div class="banner-slider__placeholder"><?php echo esc_html( "Banner $i" ); ?></div>
+                    <a href="#" class="banner-slider__link" aria-label="<?php echo esc_attr( "Banner $n" ); ?>">
+                        <img src="<?php echo esc_url( "https://placehold.co/200x100/e2e8f0/58595B?text=Banner+$n" ); ?>"
+                             alt="<?php echo esc_attr( "Banner $n" ); ?>"
+                             width="200" height="100"
+                             class="banner-slider__img">
+                    </a>
                 </div>
-                <?php endfor; ?>
+                <?php
+                    endfor;
+                else :
+                    foreach ( $banners as $banner ) :
+                        $img_url = wp_get_attachment_image_url( $banner['img_id'], 'full' );
+                        $img_alt = get_post_meta( $banner['img_id'], '_wp_attachment_image_alt', true );
+                        $href    = $banner['link'] ?: '#';
+                        if ( ! $img_url ) continue;
+                ?>
+                <div class="banner-slider__slide">
+                    <a href="<?php echo esc_url( $href ); ?>"
+                       target="_blank" rel="noopener noreferrer"
+                       class="banner-slider__link">
+                        <img src="<?php echo esc_url( $img_url ); ?>"
+                             alt="<?php echo esc_attr( $img_alt ); ?>"
+                             class="banner-slider__img">
+                    </a>
+                </div>
+                <?php
+                    endforeach;
+                endif;
+                ?>
             </div>
         </div>
 
