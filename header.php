@@ -68,7 +68,7 @@
             </a>
 
             <!-- Burger (mobil) -->
-            <button class="flex md:hidden flex-col gap-[5px] bg-transparent border-none cursor-pointer p-[.4rem] ml-auto"
+            <button class="flex xl:hidden flex-col gap-[5px] bg-transparent border-none cursor-pointer p-[.4rem] ml-auto"
                     id="nav-toggle" aria-controls="site-nav" aria-expanded="false"
                     aria-label="<?php esc_attr_e( 'Deschide meniu', 'primarie' ); ?>">
                 <span class="block w-[22px] h-[2px] bg-primary transition-transform"></span>
@@ -79,7 +79,7 @@
         </div>
 
         <!-- ── Rând 2: Navigare ── -->
-        <nav class="hidden md:block w-full" id="site-nav"
+        <nav class="hidden xl:block w-full" id="site-nav"
              aria-label="<?php esc_attr_e( 'Navigare principală', 'primarie' ); ?>">
             <?php
             wp_nav_menu( [
@@ -99,27 +99,44 @@
 
 <script>
 ( function () {
-    var toggle = document.getElementById( 'nav-toggle' );
-    var nav    = document.getElementById( 'site-nav' );
-    var header = document.getElementById( 'site-header' );
+    var toggle  = document.getElementById( 'nav-toggle' );
+    var nav     = document.getElementById( 'site-nav' );
+    var header  = document.getElementById( 'site-header' );
 
-    if ( toggle && nav ) {
-        toggle.addEventListener( 'click', function () {
-            var isOpen = nav.classList.contains( 'nav-open' );
-            if ( isOpen ) {
-                nav.classList.remove( 'nav-open' );
-                nav.classList.add( 'hidden' );
-                this.setAttribute( 'aria-expanded', 'false' );
-            } else {
-                nav.classList.remove( 'hidden' );
-                nav.classList.add( 'nav-open' );
-                this.setAttribute( 'aria-expanded', 'true' );
-            }
-        } );
+    // Overlay
+    var overlay = document.createElement( 'div' );
+    overlay.id  = 'nav-overlay';
+    document.body.appendChild( overlay );
+
+    // Buton închidere în interiorul panel-ului
+    var closeBtn = document.createElement( 'button' );
+    closeBtn.id  = 'nav-close';
+    closeBtn.setAttribute( 'aria-label', '<?php esc_attr_e( 'Închide meniu', 'primarie' ); ?>' );
+    closeBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    if ( nav ) nav.insertBefore( closeBtn, nav.firstChild );
+
+    function openNav() {
+        nav.classList.add( 'nav-open' );
+        overlay.classList.add( 'active' );
+        document.body.style.overflow = 'hidden';
+        toggle.setAttribute( 'aria-expanded', 'true' );
     }
+
+    function closeNav() {
+        nav.classList.remove( 'nav-open' );
+        overlay.classList.remove( 'active' );
+        document.body.style.overflow = '';
+        toggle.setAttribute( 'aria-expanded', 'false' );
+    }
+
+    if ( toggle ) toggle.addEventListener( 'click', openNav );
+    closeBtn.addEventListener( 'click', closeNav );
+    overlay.addEventListener( 'click', closeNav );
 
     window.addEventListener( 'scroll', function () {
         if ( header ) header.classList.toggle( 'header--scrolled', window.scrollY > 40 );
     }, { passive: true } );
 } )();
 </script>
+
+<div id="page-content">

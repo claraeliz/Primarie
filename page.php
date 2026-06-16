@@ -5,6 +5,23 @@
 
         <article id="post-<?php the_ID(); ?>" <?php post_class( 'max-w-4xl' ); ?>>
 
+            <?php $ancestors = array_reverse( get_post_ancestors( get_the_ID() ) ); ?>
+            <nav class="text-sm text-muted mb-4 flex items-center gap-2 flex-wrap">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>"
+                   class="hover:text-primary transition-colors no-underline">
+                    <?php bloginfo( 'name' ); ?>
+                </a>
+                <?php foreach ( $ancestors as $ancestor_id ) : ?>
+                    <span class="text-muted/40">—</span>
+                    <a href="<?php echo esc_url( get_permalink( $ancestor_id ) ); ?>"
+                       class="hover:text-primary transition-colors no-underline">
+                        <?php echo esc_html( get_the_title( $ancestor_id ) ); ?>
+                    </a>
+                <?php endforeach; ?>
+                <span class="text-muted/40">—</span>
+                <span class="text-ink"><?php the_title(); ?></span>
+            </nav>
+
             <h1 class="text-[2rem] font-extrabold text-ink tracking-[-0.02em] mb-6">
                 <?php the_title(); ?>
             </h1>
@@ -19,6 +36,16 @@
                 <div class="prose prose-slate max-w-none mb-8 text-ink leading-relaxed">
                     <?php the_content(); ?>
                     <?php wp_link_pages(); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php
+            // ─── Video ───────────────────────────────────────────────────────
+            $video_embed = get_field( 'video_pagina' );
+            if ( $video_embed ) :
+            ?>
+                <div class="video-embed-wrap mb-8">
+                    <?php echo $video_embed; ?>
                 </div>
             <?php endif; ?>
 

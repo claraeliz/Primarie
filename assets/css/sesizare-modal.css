@@ -1,0 +1,73 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Sesizare Modal — CSS independent de temă
+   Markup-ul folosește în principal clase Tailwind (vezi sesizare-modal-loader.php).
+   Aici rămâne doar ce nu se poate exprima curat prin utility classes:
+   tranziția de open/close, scrollbar-ul intern și polish-ul Leaflet.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Open/close transition ──────────────────────────────────────────────── */
+.sesizare-overlay {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.sesizare-overlay.is-open {
+    opacity: 1;
+}
+
+.sesizare-modal {
+    transform: scale(0.96);
+    transition: transform 0.2s ease;
+}
+
+.sesizare-overlay.is-open .sesizare-modal {
+    transform: scale(1);
+}
+
+/* ─── Scrollbar intern (zonă conținut) ───────────────────────────────────── */
+#sesizare-step-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+#sesizare-step-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#sesizare-step-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#sesizare-step-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+}
+
+/* ─── Stepper — stări cerculețe ──────────────────────────────────────────── */
+[data-stepper-circle] {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-stepper-circle].is-complete,
+[data-stepper-circle].is-current {
+    background-color: #7cb342;
+    border-color: #7cb342;
+    color: #fff;
+}
+
+/* ─── Leaflet polish ──────────────────────────────────────────────────────── */
+#sesizare-map {
+    background-color: #10183f; /* placeholder vizibil cât se încarcă tile-urile */
+    cursor: crosshair;
+}
+
+#sesizare-map .leaflet-control-zoom a {
+    color: #1a2456;
+}
+
+/* Dezactivează scroll-ul paginii din spatele modalului fără a opri scroll wheel zoom pe hartă */
+body.sesizare-modal-locked {
+    overflow: hidden;
+}

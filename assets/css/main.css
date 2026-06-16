@@ -333,6 +333,14 @@ img { max-width: 100%; height: auto; display: block; }
 .site-info { font-size: .85rem; color: var(--color-muted); }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1500px) {
+    .sub-menu .sub-menu {
+        right: auto !important;
+        left: 0 !important;
+    }
+}
+
 @media (max-width: 768px) {
     /* Header: hide search + contact, show burger */
     .site-search { display: none; }

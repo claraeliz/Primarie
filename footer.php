@@ -1,3 +1,5 @@
+</div><!-- #page-content -->
+
 <footer class="bg-white text-gray-600">
 
     <!-- Banner slider -->

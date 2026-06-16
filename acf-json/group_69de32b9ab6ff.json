@@ -1,0 +1,80 @@
+{
+    "key": "group_69de32b9ab6ff",
+    "title": "Single page",
+    "fields": [
+        {
+            "key": "field_6a5f9e1b3d402",
+            "label": "Video",
+            "name": "video_pagina",
+            "aria-label": "",
+            "type": "oembed",
+            "instructions": "Lipește un link YouTube sau Vimeo",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": 640,
+            "height": 360,
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_69de32bbb78e1",
+            "label": "Incarca documente",
+            "name": "incarca_documente",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "document_public"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_template",
+                "operator": "!=",
+                "value": "page-homepage.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 2000000001
+}

@@ -73,6 +73,12 @@ add_filter( 'acf/settings/load_json', function ( $paths ) {
 $_inc = get_template_directory() . '/inc/footer-settings.php';
 if ( file_exists( $_inc ) ) require_once $_inc;
 
+$_inc = get_template_directory() . '/inc/post-types.php';
+if ( file_exists( $_inc ) ) require_once $_inc;
+
+$_inc = get_template_directory() . '/sesizare-modal-loader.php';
+if ( file_exists( $_inc ) ) require_once $_inc;
+
 // ─── Disable Gutenberg ───────────────────────────────────────────────────────
 
 add_filter( 'use_block_editor_for_post', '__return_false', 10 );
@@ -140,3 +146,37 @@ function claraeliz_enqueue_harta_comuna_assets() {
         'primarieLabel' => __( 'Primăria Nimigea', 'claraeliz' ),
     ) );
 }
+
+// ─── Gallery lightbox ────────────────────────────────────────────────────────
+
+// Forțează galeria WP să linkeze la fișierul imaginii (necesar pentru lightbox)
+add_filter( 'shortcode_atts_gallery', function ( $out ) {
+    if ( empty( $out['link'] ) ) {
+        $out['link'] = 'file';
+    }
+    return $out;
+} );
+
+add_action( 'wp_enqueue_scripts', function () {
+    wp_enqueue_style(
+        'glightbox',
+        'https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css',
+        [],
+        '3.3.0'
+    );
+    wp_enqueue_script(
+        'glightbox',
+        'https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js',
+        [],
+        '3.3.0',
+        true
+    );
+    wp_add_inline_script( 'glightbox', '
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof GLightbox !== "undefined") {
+                GLightbox({ selector: ".gallery a", touchNavigation: true, loop: true });
+            }
+        });
+    ' );
+} );
+
