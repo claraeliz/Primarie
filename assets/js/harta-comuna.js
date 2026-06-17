@@ -36,6 +36,12 @@
             .then( function( r ) { return r.json(); } )
             .then( function( data ) {
                 var layer = L.geoJSON( data, {
+                    filter: function( feature ) {
+                        return feature.geometry && (
+                            feature.geometry.type === 'Polygon' ||
+                            feature.geometry.type === 'MultiPolygon'
+                        );
+                    },
                     style: {
                         color: '#a52121',
                         weight: 3,
